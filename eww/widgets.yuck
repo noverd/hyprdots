@@ -1,0 +1,150 @@
+;; Widgets
+(defwidget workspace [id]
+  (button
+    :onclick "hyprctl dispatch workspace ${id}"
+    :class {current-workspace == (id + "") ? "ws-active" : "ws-inactive"}
+    (label :text id)
+  )
+)
+
+(defwidget sysinfo []
+  (box
+    :orientation "h"
+    :spacing 24
+    :class "sys-info"
+    
+    (box
+      :orientation "v"
+      :spacing 4
+      :tooltip "CPU Usage: ${round(EWW_CPU.avg, 0)}%"
+      (label :text "" :class "icon-cpu")
+      (label :text { round(EWW_CPU.avg, 0) + "%" } :class "cpu-text")
+    )
+    
+    (box
+      :orientation "v"
+      :spacing 4
+      :tooltip "RAM Usage: ${round(EWW_RAM.used_mem_perc, 0)}%"
+      (label :text "" :class "icon-ram")
+      (label :text { round(EWW_RAM.used_mem_perc, 0) + "%" } :class "ram-text")
+    )
+
+    (box
+      :orientation "v"
+      :spacing 4
+      :tooltip "Disk Usage: ${round(EWW_DISK["/"].used_perc, 0)}%"
+      (label :text "" :class "icon-disk")
+      (label :text { round(EWW_DISK["/"].used_perc, 0) + "%" } :class "disk-text")
+    )
+
+    (box
+      :orientation "v"
+      :spacing 4
+      :tooltip "CPU Temperature: ${EWW_TEMPS["CORETEMP_PACKAGE_ID_0"]}°C"
+      (label :text "" :class "icon-temp")
+      (label :text { EWW_TEMPS["CORETEMP_PACKAGE_ID_0"] + "°C" } :class "temp-text")
+    )
+
+    (box
+      :orientation "v"
+      :spacing 4
+      :tooltip "Battery: ${battery-status}%"
+      (label :text "" :class "icon-bat")
+      (label :text { battery-status + "%" })
+    )
+    
+    (box
+      :orientation "v"
+      :spacing 4
+      :tooltip "Network Download Speed: ${network-speed}KB/s"
+      (label :text "" :class "icon-net")
+      (label :text { network-speed + "KB/s" })
+    )
+
+    (box
+      :orientation "v"
+      :spacing 4
+      :tooltip "Bluetooth: ${bluetooth-status}"
+      (label :text "" :class "icon-bt")
+      (label :text bluetooth-status :wrap true)
+    )
+  )
+)
+
+(defwidget time-widget []
+  (button
+    :onclick "bash /home/gagarinten/hyprdots/scripts/toggle-calendar.sh"
+    :class "time-widget"
+    (box
+      :orientation "v"
+      (label :text { formattime(EWW_TIME, "%H:%M") } :class "time-main")
+      (label :text { formattime(EWW_TIME, "%a %d %b") } :class "time-date")
+    )
+  )
+)
+
+(defwidget swaync-widget []
+  (button
+    :onclick "swaync-client -t"
+    :class "swaync-widget"
+    (label :text { swaync-notifs > 0 ? "🔔 " + swaync-notifs : "🔕"})
+  )
+)
+
+(defwidget volume-widget []
+  (button
+    :onclick "bash /home/gagarinten/hyprdots/scripts/toggle-volume-slider.sh"
+    :class {volume-muted == "yes" ? "volume-btn muted" : "volume-btn"}
+    (box
+      :orientation "h"
+      :spacing 4
+      (label :text {volume-muted == "yes" ? "🔇" : "🔊"})
+      (label :text volume-level)
+    )
+  )
+)
+
+(defwidget volume-slider []
+  (box
+    :orientation "h"
+    :class "volume-slider-box"
+    :spacing 10
+    (label :text {volume-muted == "yes" ? "🔇" : "🔊"})
+    (scale
+      :min 0
+      :max 101
+      :value {volume-level}
+      :onchange "pactl set-sink-volume @DEFAULT_SINK@ {}%"
+    )
+    (label :text {volume-level + "%"})
+  )
+)
+
+(defwidget mic-widget []
+  (button
+    :onclick "bash /home/gagarinten/hyprdots/scripts/toggle-mic-slider.sh"
+    :class {mic-muted == "yes" ? "mic-btn muted" : "mic-btn"}
+    (box
+      :orientation "h"
+      :spacing 4
+      (label :text {mic-muted == "yes" ? "" : ""})
+      (label :text mic-level)
+    )
+  )
+)
+
+(defwidget mic-slider []
+  (box
+    :orientation "h"
+    :class "mic-slider-box"
+    :spacing 10
+    (label :text {mic-muted == "yes" ? "" : ""})
+    (scale
+      :min 0
+      :max 101
+      :value {mic-level}
+      :onchange "pactl set-source-volume @DEFAULT_SOURCE@ {}%"
+    )
+    (label :text {mic-level + "%"})
+  )
+)

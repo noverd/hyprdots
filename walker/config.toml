@@ -1,0 +1,72 @@
+# ~/.config/walker/config.toml
+
+# General walker configurations
+[walker]
+show_prefixes = true
+max_results = 20
+theme = "default"
+
+# A list of available walkers, can be used to create different entry points with different sets of runners.
+# can be selected via a keybind (see [keybinds]), or via the walkers provider (prefix: >)
+# if no name is given, the walker is started with the default walker.
+walkers = [
+    { name = "all", runners = ["drun", "calc", "web-search", "files", "history", "runner", "symbols", "arch", "todo", "bookmarks", "bluetooth", "networkmanager"] },
+    { name = "lms", runners = ["files", "web-search"] },
+]
+
+[providers.drun]
+# protocol = "all" # "all", "desktop-actions"
+
+[providers.calc]
+# prefix = "=" # Prefix to start the calculator
+
+[providers.web-search]
+prefix = "?" # Prefix to start the web search
+default_search_engine = "google" # The default search engine to use
+search_engines = [
+    { name = "google", url = "https://www.google.com/search?q=%s" },
+    { name = "duckduckgo", url = "https://duckduckgo.com/?q=%s" },
+    { name = "github", url = "https://github.com/search?q=%s" },
+]
+
+[providers.files]
+prefix = "/" # Prefix to start the file browser
+shortcuts = [
+    { name = "home", path = "~/" },
+    { name = "config", path = "~/.config" },
+    { name = "documents", path = "~/Documents" },
+    { name = "downloads", path = "~/Downloads" },
+    { name = "pictures", path = "~/Pictures" },
+    { name = "videos", path = "~/Videos" },
+]
+
+[providers.runner]
+# prefix = "!" # Prefix to start the runner
+
+[providers.history]
+# prefix = ":" # Prefix to start the history
+
+[providers.symbols]
+# prefix = "." # Prefix to start the symbols
+
+[providers.arch]
+# prefix = "pkg" # Prefix to start the arch package manager
+
+[providers.todo]
+# prefix = "todo" # Prefix to start the todo list
+
+[providers.bookmarks]
+# prefix = "bm" # Prefix to start the bookmarks
+
+[providers.bluetooth]
+# prefix = "bt" # Prefix to start the bluetooth manager
+
+[providers.networkmanager]
+# prefix = "nm" # Prefix to start the network manager
+
+[keybinds]
+"F1" = "show_keybinds"
+"Escape" = "close"
+"ctrl-c" = "copy"
+"ctrl-up" = "history_prev"
+"ctrl-down" = "history_next"

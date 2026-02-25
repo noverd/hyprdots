@@ -1,0 +1,14 @@
+;; Variables
+(defpoll current-workspace :interval "1s" "hyprctl monitors -j | jq '.[0].activeWorkspace.id' | tr -d '\"'")
+(defpoll battery-status :interval "30s" "bash /home/gagarinten/hyprdots/scripts/battery.sh")
+(defpoll network-speed :interval "2s" "bash /home/gagarinten/hyprdots/scripts/network.sh")
+(defpoll volume-level :interval "1s" "bash /home/gagarinten/hyprdots/scripts/volume-level.sh")
+(defpoll volume-muted :interval "1s" "bash /home/gagarinten/hyprdots/scripts/volume-mute.sh")
+(defpoll bluetooth-status :interval "5s" "bash /home/gagarinten/hyprdots/scripts/bluetooth.sh")
+(defpoll swaync-notifs :interval "5s" "bash /home/gagarinten/hyprdots/scripts/swaync.sh")
+(defpoll mic-level :interval "1s" "bash /home/gagarinten/hyprdots/scripts/mic-level.sh")
+(defpoll mic-muted :interval "1s" "bash /home/gagarinten/hyprdots/scripts/mic-mute.sh")
+
+(defvar calendar-open false)
+(defvar volume-slider-open false)
+(defvar mic-slider-open false)

@@ -1,0 +1,16 @@
+{
+  "runners": [
+    "drun",
+    "calc",
+    "web-search",
+    "files",
+    "runner",
+    "history",
+    "symbols",
+    "arch",
+    "todo",
+    "bookmarks",
+    "bluetooth",
+    "networkmanager"
+  ]
+}

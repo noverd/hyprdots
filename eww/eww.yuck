@@ -1,0 +1,5 @@
+;; eww.yuck - Main file
+(include "./variables.yuck")
+(include "./widgets.yuck")
+(include "./windows.yuck")
+(include "/home/gagarinten/hyprdots/eww/activate_linux.yuck")
