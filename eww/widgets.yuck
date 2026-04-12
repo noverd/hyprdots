@@ -1,3 +1,4 @@
+
 ;; Widgets
 (defwidget workspace [id]
   (button
@@ -52,13 +53,15 @@
       (label :text "" :class "icon-bat")
       (label :text { battery-status + "%" })
     )
-    
-    (box
-      :orientation "v"
-      :spacing 4
-      :tooltip "Network Download Speed: ${network-speed}KB/s"
-      (label :text "" :class "icon-net")
-      (label :text { network-speed + "KB/s" })
+    (eventbox
+      :onclick "bash /home/gagarinten/hyprdots/scripts/toggle-nmrs.sh"
+      (box
+        :orientation "v"
+        :spacing 4
+        :tooltip "Network Download Speed: ${network-speed}KB/s"
+        (label :text "" :class "icon-net")
+        (label :text { network-speed + "KB/s" })
+      )
     )
 
     (box
