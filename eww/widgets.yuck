@@ -17,6 +17,7 @@
     (box
       :orientation "v"
       :spacing 4
+      :width 50
       :tooltip "CPU Usage: ${round(EWW_CPU.avg, 0)}%"
       (label :text "" :class "icon-cpu")
       (label :text { round(EWW_CPU.avg, 0) + "%" } :class "cpu-text")
@@ -25,6 +26,7 @@
     (box
       :orientation "v"
       :spacing 4
+      :width 50
       :tooltip "RAM Usage: ${round(EWW_RAM.used_mem_perc, 0)}%"
       (label :text "" :class "icon-ram")
       (label :text { round(EWW_RAM.used_mem_perc, 0) + "%" } :class "ram-text")
@@ -33,6 +35,7 @@
     (box
       :orientation "v"
       :spacing 4
+      :width 50
       :tooltip "Disk Usage: ${round(EWW_DISK["/"].used_perc, 0)}%"
       (label :text "" :class "icon-disk")
       (label :text { round(EWW_DISK["/"].used_perc, 0) + "%" } :class "disk-text")
@@ -41,6 +44,7 @@
     (box
       :orientation "v"
       :spacing 4
+      :width 50
       :tooltip "CPU Temperature: ${EWW_TEMPS["CORETEMP_PACKAGE_ID_0"]}°C"
       (label :text "" :class "icon-temp")
       (label :text { EWW_TEMPS["CORETEMP_PACKAGE_ID_0"] + "°C" } :class "temp-text")
@@ -49,24 +53,29 @@
     (box
       :orientation "v"
       :spacing 4
+      :width 50
       :tooltip "Battery: ${battery-status}%"
+      :visible { battery }
       (label :text "" :class "icon-bat")
       (label :text { battery-status + "%" })
+      
     )
     (eventbox
       :onclick "bash /home/gagarinten/hyprdots/scripts/toggle-nmrs.sh"
       (box
         :orientation "v"
         :spacing 4
-        :tooltip "Network Download Speed: ${network-speed}KB/s"
+        :width 50
+        :tooltip "Network Download Speed: ${network-speed}/s"
         (label :text "" :class "icon-net")
-        (label :text { network-speed + "KB/s" })
+        (label :text { network-speed + "/s" })
       )
     )
 
     (box
       :orientation "v"
       :spacing 4
+      :width 50
       :tooltip "Bluetooth: ${bluetooth-status}"
       (label :text "" :class "icon-bt")
       (label :text bluetooth-status :wrap true)

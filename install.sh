@@ -53,7 +53,7 @@ install() {
 
     info "Starting Hyprdots installation using symbolic links..."
     
-    local config_dirs=("hypr" "eww" "swaync" "swayosd" "walker" "ignis")
+    local config_dirs=("hypr" "eww" "swaync" "swayosd" "walker" "ignis" "gtk-4.0")
 
     # Backup and link each directory
     for dir in "${config_dirs[@]}"; do
@@ -98,7 +98,7 @@ uninstall() {
     fi
 
     info "Starting Hyprdots uninstallation..."
-    local config_dirs=("hypr" "eww" "swaync" "swayosd" "walker" "ignis")
+    local config_dirs=("hypr" "eww" "swaync" "swayosd" "walker" "ignis" "gtk-4.0")
 
     info "Removing symbolic links..."
     for dir in "${config_dirs[@]}"; do

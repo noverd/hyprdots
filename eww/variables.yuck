@@ -1,7 +1,7 @@
 ;; Variables
 (defpoll battery-status :interval "30s" "bash /home/gagarinten/hyprdots/scripts/battery.sh")
-(defpoll network-icon :interval "2s" "bash /home/gagarinten/hyprdots/scripts/network.sh")
-(defpoll network-name :interval "2s" "bash /home/gagarinten/hyprdots/scripts/network.sh")
+(defpoll network-icon :interval "1s" "bash /home/gagarinten/hyprdots/scripts/network.sh")
+(defpoll network-name :interval "1s" "bash /home/gagarinten/hyprdots/scripts/network.sh")
 (defpoll network-speed :interval "2s" "bash /home/gagarinten/hyprdots/scripts/network.sh")
 (defpoll volume-level :interval "1s" "bash /home/gagarinten/hyprdots/scripts/volume-level.sh")
 (defpoll volume-muted :interval "1s" "bash /home/gagarinten/hyprdots/scripts/volume-mute.sh")
@@ -15,3 +15,5 @@
 (defvar volume-slider-open false)
 (defvar mic-slider-open false)
 (defvar current-workspace 1)
+(defvar battery false)
+
