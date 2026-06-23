@@ -2,10 +2,7 @@
 
 #
 # Hyprdots installer
-# Author: gagarinten (modified by Gemini)
-#
 
-# --- Variables and Colors ---
 set -e
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 CONFIG_DIR="$HOME/.config"
@@ -53,7 +50,7 @@ install() {
 
     info "Starting Hyprdots installation using symbolic links..."
     
-    local config_dirs=("hypr" "eww" "swaync" "swayosd" "walker" "ignis" "gtk-4.0")
+    local config_dirs=("hypr" "eww" "swaync" "swayosd" "walker" "ignis" "gtk-4.0" "kitty" "fastfetch")
 
     # Backup and link each directory
     for dir in "${config_dirs[@]}"; do
@@ -78,8 +75,6 @@ install() {
     done
     
     info "Updating dynamic paths in configuration files..."
-    # This sed command makes the paths absolute to the repository's location
-    # This ensures that no matter where you clone the repo, the paths inside the configs will be correct.
     if ! find "$SCRIPT_DIR/eww" -type f -name "*.yuck" -exec sed -i "s|/home/gagarinten/hyprdots|$SCRIPT_DIR|g" {} +; then
         error "Failed to update paths in eww configuration."
     fi
@@ -98,7 +93,7 @@ uninstall() {
     fi
 
     info "Starting Hyprdots uninstallation..."
-    local config_dirs=("hypr" "eww" "swaync" "swayosd" "walker" "ignis" "gtk-4.0")
+    local config_dirs=("hypr" "eww" "swaync" "swayosd" "walker" "ignis" "gtk-4.0" "kitty" "fastfetch")
 
     info "Removing symbolic links..."
     for dir in "${config_dirs[@]}"; do
