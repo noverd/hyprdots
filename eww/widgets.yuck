@@ -13,7 +13,7 @@
     :orientation "h"
     :spacing 24
     :class "sys-info"
-    
+
     (box
       :orientation "v"
       :spacing 4
@@ -22,7 +22,7 @@
       (label :text "" :class "icon-cpu")
       (label :text { round(EWW_CPU.avg, 0) + "%" } :class "cpu-text")
     )
-    
+
     (box
       :orientation "v"
       :spacing 4
@@ -58,7 +58,7 @@
       :visible { battery }
       (label :text "" :class "icon-bat")
       (label :text { battery-status + "%" })
-      
+
     )
     (eventbox
       :onclick "bash /home/gagarinten/hyprdots/scripts/toggle-nmrs.sh"
@@ -66,9 +66,9 @@
         :orientation "v"
         :spacing 4
         :width 50
-        :tooltip "Network Download Speed: ${network-speed}/s"
+        :tooltip "Network Download Speed: ${network-speed}"
         (label :text "" :class "icon-net")
-        (label :text { network-speed + "/s" })
+        (label :text { network-speed })
       )
     )
 
@@ -158,5 +158,34 @@
       :onchange "pactl set-source-volume @DEFAULT_SOURCE@ {}%"
     )
     (label :text {mic-level + "%"})
+  )
+)
+
+(defwidget brightness-widget []
+  (button
+    :onclick "bash /home/gagarinten/hyprdots/scripts/toggle-brightness-slider.sh"
+    :class "brightness-btn"
+    (box
+      :orientation "h"
+      :spacing 4
+      (label :text "")
+      (label :text {brightness-level + "%"})
+    )
+  )
+)
+
+(defwidget brightness-slider []
+  (box
+    :orientation "h"
+    :class "brightness-slider-box"
+    :spacing 10
+    (label :text "")
+    (scale
+      :min 0
+      :max 101
+      :value {brightness-level}
+      :onchange "brightnessctl set {}%"
+    )
+    (label :text {brightness-level + "%"})
   )
 )

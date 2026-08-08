@@ -23,6 +23,10 @@ Before running the installation script, please ensure the following packages are
     -   `hyprland`
     -   `hypridle`
     -   `hyprlock`
+    -   `hyprsunset` (blue light filter)
+    -   `hyprpaper` (wallpaper)
+-   **Session Manager:**
+    -   `uwsm` (Universal Wayland Session Manager)
 -   **UI & Widgets:**
     -   `walker` (Application Launcher)
     -   `eww` (Elkowars Wacky Widgets)
@@ -41,6 +45,18 @@ Before running the installation script, please ensure the following packages are
 -   **Fonts:**
     -   A **Nerd Font** is required for icons to display correctly (e.g., *JetBrainsMono Nerd Font*).
 
+### Supported Distributions
+
+The install script automatically detects your package manager and can install missing dependencies:
+
+| Distribution | Package Manager |
+|--------------|-----------------
+| Arch Linux   | pacman          |
+| Gentoo       | portage (emerge)|
+| Debian/Ubuntu| apt             |
+| Fedora       | dnf             |
+| openSUSE     | zypper          |
+
 ## Installation & Management
 
 This project uses a helper script to manage the configurations by creating symbolic links. This means any changes you make in this git repository will be reflected live on your system.
@@ -55,7 +71,7 @@ This project uses a helper script to manage the configurations by creating symbo
     ```
 
 2.  **Run the script with the `--install` flag:**
-    The script will ask for confirmation, back up any existing configurations, and then create the necessary symbolic links.
+    The script will ask for confirmation, check dependencies, back up any existing configurations, and then create the necessary symbolic links.
     ```bash
     chmod +x install.sh
     ./install.sh --install
@@ -72,7 +88,9 @@ To remove the symbolic links and restore your previous configuration from the ba
 
 ## Keybindings
 
-The main modifier key is the **Super** key (Windows key). Here are some default keybindings:
+The main modifier key is the **Super** key (Windows key).
+
+### Applications
 
 | Keybinding              | Action                     |
 | ----------------------- | -------------------------- |
@@ -80,12 +98,65 @@ The main modifier key is the **Super** key (Windows key). Here are some default 
 | `SUPER + E`             | Open File Manager          |
 | `SUPER + W`             | Open Web Browser           |
 | `SUPER + R`             | Open Application Menu      |
+| `PrintScreen`           | Take Screenshot            |
+
+### Window Management
+
+| Keybinding              | Action                     |
+| ----------------------- | -------------------------- |
 | `SUPER + C`             | Close Active Window        |
 | `SUPER + F`             | Toggle Fullscreen          |
 | `SUPER + V`             | Toggle Floating Window     |
+| `SUPER + P`             | Toggle Pseudo              |
+| `SUPER + J`             | Toggle Split               |
 | `SUPER + left/right/up/down` | Focus Window               |
-| `SUPER + 1-9`           | Switch to Workspace        |
-| `SUPER + SHIFT + 1-9`   | Move Window to Workspace   |
-| `PrintScreen`           | Take Screenshot            |
+| `SUPER + mouse:272`     | Move Window (drag)         |
+| `SUPER + mouse:273`     | Resize Window (drag)       |
 
-Multimedia keys for volume, brightness, and player controls are also configured.
+### Workspaces
+
+| Keybinding              | Action                     |
+| ----------------------- | -------------------------- |
+| `SUPER + 1-0`           | Switch to Workspace 1-10   |
+| `SUPER + SHIFT + 1-0`   | Move Window to Workspace   |
+| `SUPER + S`             | Toggle Scratchpad          |
+| `SUPER + SHIFT + S`     | Move to Scratchpad         |
+| `SUPER + mouse_down`    | Next Workspace             |
+| `SUPER + mouse_up`      | Previous Workspace         |
+
+### Hyprsunset (Blue Light Filter)
+
+Hyprsunset automatically adjusts screen color temperature based on time of day.
+
+**Default profiles:**
+- 06:00 → 6500K (neutral)
+- 20:00 → 4500K (warmer)
+- 23:00 → 3500K (very warm)
+
+| Keybinding              | Action                     |
+| ----------------------- | -------------------------- |
+| `SUPER + T`             | Reset to 6500K             |
+| `SUPER + SHIFT + T`     | Toggle filter on/off       |
+| `SUPER + SHIFT + ↑`     | Increase temperature       |
+| `SUPER + SHIFT + ↓`     | Decrease temperature       |
+
+### Multimedia Keys
+
+| Keybinding              | Action                     |
+| ----------------------- | -------------------------- |
+| `XF86AudioRaiseVolume`  | Volume Up                  |
+| `XF86AudioLowerVolume`  | Volume Down                |
+| `XF86AudioMute`         | Mute Output                |
+| `XF86AudioMicMute`      | Mute Microphone            |
+| `XF86MonBrightnessUp`   | Brightness Up              |
+| `XF86MonBrightnessDown` | Brightness Down            |
+| `XF86AudioNext`         | Next Track                 |
+| `XF86AudioPrev`         | Previous Track             |
+| `XF86AudioPause`        | Play/Pause                 |
+| `XF86AudioPlay`         | Play/Pause                 |
+
+### Session
+
+| Keybinding              | Action                     |
+| ----------------------- | -------------------------- |
+| `SUPER + SHIFT + M`     | Exit Session               |

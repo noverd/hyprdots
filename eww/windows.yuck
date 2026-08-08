@@ -55,6 +55,7 @@
       (systray)
       (mic-widget)
       (volume-widget)
+      (brightness-widget)
       (time-widget)
       
       ;; Кнопка выключения
@@ -129,4 +130,13 @@
   :windowtype "dock"
   :wm-ignore false
   (mic-slider)
+)
+
+(defwindow brightness-slider-win
+  :monitor 0
+  :geometry (geometry :x "-20px" :y "200px" :anchor "top right")
+  :stacking "fg"
+  :windowtype "dock"
+  :wm-ignore false
+  (brightness-slider)
 )

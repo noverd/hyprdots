@@ -1,19 +1,18 @@
 ;; Variables
 (defpoll battery-status :interval "30s" "bash /home/gagarinten/hyprdots/scripts/battery.sh")
-(defpoll network-icon :interval "1s" "bash /home/gagarinten/hyprdots/scripts/network.sh")
-(defpoll network-name :interval "1s" "bash /home/gagarinten/hyprdots/scripts/network.sh")
-(defpoll network-speed :interval "2s" "bash /home/gagarinten/hyprdots/scripts/network.sh")
 (defpoll volume-level :interval "1s" "bash /home/gagarinten/hyprdots/scripts/volume-level.sh")
 (defpoll volume-muted :interval "1s" "bash /home/gagarinten/hyprdots/scripts/volume-mute.sh")
 (defpoll bluetooth-status :interval "5s" "bash /home/gagarinten/hyprdots/scripts/bluetooth.sh")
 (defpoll swaync-notifs :interval "5s" "bash /home/gagarinten/hyprdots/scripts/swaync.sh")
 (defpoll mic-level :interval "1s" "bash /home/gagarinten/hyprdots/scripts/mic-level.sh")
 (defpoll mic-muted :interval "1s" "bash /home/gagarinten/hyprdots/scripts/mic-mute.sh")
+(defpoll brightness-level :interval "1s" "bash /home/gagarinten/hyprdots/scripts/brightness-level.sh")
 
 (defvar calendar-open false)
 (defvar nmrs-open false)
 (defvar volume-slider-open false)
 (defvar mic-slider-open false)
+(defvar brightness-slider-open false)
 (defvar current-workspace 1)
 (defvar battery false)
-
+(defvar network-speed "0B/s")

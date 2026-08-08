@@ -29,6 +29,10 @@ error() {
     exit 1
 }
 
+warn() {
+    echo -e "${C_YELLOW}[WARN]${C_RESET} $1"
+}
+
 prompt_confirm() {
     read -r -p "$(echo -e "${C_YELLOW}[CONFIRM]${C_RESET} $1 [y/N] ")" response
     case "$response" in
@@ -41,6 +45,120 @@ prompt_confirm() {
     esac
 }
 
+detect_package_manager() {
+    if command -v pacman &>/dev/null; then
+        echo "pacman"
+    elif command -v emerge &>/dev/null; then
+        echo "portage"
+    elif command -v apt &>/dev/null; then
+        echo "apt"
+    elif command -v dnf &>/dev/null; then
+        echo "dnf"
+    elif command -v zypper &>/dev/null; then
+        echo "zypper"
+    else
+        echo "unknown"
+    fi
+}
+
+install_packages() {
+    local pm="$1"
+    shift
+    local packages=("$@")
+
+    case "$pm" in
+        pacman)
+            sudo pacman -S --needed "${packages[@]}"
+            ;;
+        portage)
+            # Map package names to Gentoo categories
+            local gentoo_packages=()
+            for pkg in "${packages[@]}"; do
+                case "$pkg" in
+                    hyprland)        gentoo_packages+=("gui-wm/hyprland") ;;
+                    hypridle)        gentoo_packages+=("gui-apps/hypridle") ;;
+                    hyprlock)        gentoo_packages+=("gui-apps/hyprlock") ;;
+                    hyprsunset)      gentoo_packages+=("gui-apps/hyprsunset") ;;
+                    hyprpaper)       gentoo_packages+=("gui-apps/hyprpaper") ;;
+                    uwsm)            gentoo_packages+=("gui-apps/uwsm") ;;
+                    walker)          gentoo_packages+=("gui-apps/walker") ;;
+                    eww)             gentoo_packages+=("gui-apps/eww") ;;
+                    swaync)          gentoo_packages+=("gui-apps/swaync") ;;
+                    swayosd)         gentoo_packages+=("gui-apps/swayosd") ;;
+                    bluez)           gentoo_packages+=("net-wireless/bluez") ;;
+                    iproute2)        gentoo_packages+=("sys-apps/iproute2") ;;
+                    jq)              gentoo_packages+=("app-misc/jq") ;;
+                    socat)           gentoo_packages+=("net-analyzer/socat") ;;
+                    playerctl)       gentoo_packages+=("media-sound/playerctl") ;;
+                    pulseaudio-utils) gentoo_packages+=("media-sound/pulseaudio") ;;
+                    *)               gentoo_packages+=("$pkg") ;;
+                esac
+            done
+            sudo emerge --ask "${gentoo_packages[@]}"
+            ;;
+        apt)
+            sudo apt install "${packages[@]}"
+            ;;
+        dnf)
+            sudo dnf install "${packages[@]}"
+            ;;
+        zypper)
+            sudo zypper install "${packages[@]}"
+            ;;
+        *)
+            warn "Unknown package manager. Please install manually: ${packages[*]}"
+            return 1
+            ;;
+    esac
+}
+
+check_dependencies() {
+    local missing=()
+    local deps=(
+        "hyprland:hyprland"
+        "hypridle:hypridle"
+        "hyprlock:hyprlock"
+        "hyprsunset:hyprsunset"
+        "hyprpaper:hyprpaper"
+        "uwsm:uwsm"
+        "walker:walker"
+        "eww:eww"
+        "swaync:swaync"
+        "swayosd:swayosd"
+        "bluetoothctl:bluez"
+        "ip:iproute2"
+        "jq:jq"
+        "socat:socat"
+        "playerctl:playerctl"
+        "pactl:pulseaudio-utils"
+    )
+
+    info "Checking dependencies..."
+    for dep in "${deps[@]}"; do
+        local cmd="${dep%%:*}"
+        local pkg="${dep##*:}"
+        if ! command -v "$cmd" &>/dev/null; then
+            missing+=("$pkg")
+        fi
+    done
+
+    if [ ${#missing[@]} -gt 0 ]; then
+        local pm
+        pm=$(detect_package_manager)
+        warn "Missing packages: ${missing[*]}"
+        warn "Detected package manager: $pm"
+        if prompt_confirm "Install missing packages?"; then
+            install_packages "$pm" "${missing[@]}"
+        else
+            if ! prompt_confirm "Continue anyway?"; then
+                exit 1
+            fi
+        fi
+    else
+        success "All dependencies are installed."
+    fi
+}
+
 # --- Core Functions ---
 install() {
     if ! prompt_confirm "This will create symbolic links for hyprdots configurations in '$CONFIG_DIR'. Existing configurations will be backed up. Continue?"; then
@@ -48,9 +166,11 @@ install() {
         exit 0
     fi
 
+    check_dependencies
+
     info "Starting Hyprdots installation using symbolic links..."
     
-    local config_dirs=("hypr" "eww" "swaync" "swayosd" "walker" "ignis" "gtk-4.0" "kitty" "fastfetch")
+    local config_dirs=("hypr" "eww" "swaync" "swayosd" "walker" "gtk-4.0" "kitty" "fastfetch")
 
     # Backup and link each directory
     for dir in "${config_dirs[@]}"; do
@@ -77,6 +197,9 @@ install() {
     info "Updating dynamic paths in configuration files..."
     if ! find "$SCRIPT_DIR/eww" -type f -name "*.yuck" -exec sed -i "s|/home/gagarinten/hyprdots|$SCRIPT_DIR|g" {} +; then
         error "Failed to update paths in eww configuration."
+    fi
+    if ! sed -i "s|/home/gagarinten/hyprdots|$SCRIPT_DIR|g" "$SCRIPT_DIR/hypr/hyprlock.conf" 2>/dev/null; then
+        warn "Could not update paths in hyprlock.conf"
     fi
 
     info "Setting script permissions..."

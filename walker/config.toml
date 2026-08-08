@@ -5,6 +5,7 @@
 show_prefixes = true
 max_results = 20
 theme = "default"
+app_launch_prefix = "uwsm app -- "
 
 # A list of available walkers, can be used to create different entry points with different sets of runners.
 # can be selected via a keybind (see [keybinds]), or via the walkers provider (prefix: >)

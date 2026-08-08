@@ -138,7 +138,7 @@ $critical-red: #ff3838;
     }
   }
   
-  .volume-btn, .mic-btn {
+  .volume-btn, .mic-btn, .brightness-btn {
     background-color: $bg-secondary;
     color: $fg-primary;
     border-radius: 0;
@@ -171,7 +171,7 @@ $critical-red: #ff3838;
   }
 }
 
-.volume-slider-box, .mic-slider-box {
+.volume-slider-box, .mic-slider-box, .brightness-slider-box {
   background-color: $bg-primary;
   border: 1px solid $border-color;
   border-radius: 0;
